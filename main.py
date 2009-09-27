@@ -5,10 +5,11 @@ from google.appengine.ext import webapp
 
 import home
 import add
+import list_all
 
 urlmap = [('/', home.Handler),
-          ('/add', add.Handler)]
-
+          ('/add', add.Handler),
+          ('/all', list_all.Handler)]
 def main():
   application = webapp.WSGIApplication(urlmap,
                                        debug=True)

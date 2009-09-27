@@ -8,7 +8,7 @@
 </ul>
 </div>
 
-<p>Upcoming birthdays:</p>
+<p>All reminders ({{reminders|length}})</p>
 {% if reminders %}
 <ul class="reminder_list">
   {% regroup reminders by month as grouped %}
@@ -16,19 +16,15 @@
     <li class="reminder_month">{{month.grouper}}
       <ul class="reminder_month_list">
       {% for rem in month.list %}
-        <li class="reminder_item">{{rem.day}} -- {{rem.note}} ({{rem.year}}) @{{rem.hour}}.00
+        <li class="reminder_item">{{rem.day|default:""}} 
+	  -- {{rem.note|default:""}}
+	     {% if rem.year %} ({{rem.year}}) {% endif %}
+	     {% if rem.hour %} @{{rem.hour}}.00 GMT {% endif %}
       {% endfor %}
       </ul>
   {% endfor %}
 </ul>
-(<a href="/all">View all</a>
 {% else %}
-<p>You have no upcoming reminders. <a href="/all">View all</a></p>
+<p>You have no reminders set. <a href="/add">Add one!</a></p>
 {% endif %}
-<div class="actions">
-<ul>
-<li><a href="/add">Add a new reminder</a>
-<li><a href="/remove">Remove selected reminders</a>
-</ul>
-</div>
 </body></html>

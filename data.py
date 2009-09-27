@@ -11,7 +11,7 @@ class Reminder(db.Model):
     remind_hour = db.IntegerProperty()
 
     _MONTH_NAMES = [
-        "",
+        "???",
         "Jan", "Feb", "Mar", "Apr",
         "May", "Jun", "Jul", "Aug",
         "Sep", "Oct", "Nov", "Dec"]
@@ -20,10 +20,11 @@ class Reminder(db.Model):
         result = {}
         result['user'] = self.user
         result['note'] = self.note
-        result['month'] = self._MONTH_NAMES[self.month]
+        result['month'] = self._MONTH_NAMES[self.month or 0]
         result['day'] = self.day
-        result['year'] = self.year or "--"
-        result['remind_hour'] = self.remind_hour + ":00 GMT"
+        result['year'] = self.year
+        result['remind_hour'] = self.remind_hour
+        return result
 
 class ReminderDB:
     to_send = Reminder.gql("WHERE day=:day AND month=:month AND hour=:hour")
@@ -37,7 +38,8 @@ class ReminderDB:
 
     def RemindersToSend(self):
         now = datetime.datetime.today()
-        return self.to_send.bind(day = now.day, month = now.month, hour = now.hour)
+        self.to_send.bind(day = now.day, month = now.month, hour = now.hour)
+        return self.to_send
 
     def UpcomingReminders(self, current_user):
         now = datetime.datetime.today()
@@ -57,4 +59,5 @@ class ReminderDB:
                 yield result
 
     def RemindersForUser(self, current_user):
-        return self.for_user.bind(user = current_user)
+        self.for_user.bind(user = current_user)
+        return self.for_user

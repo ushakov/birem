@@ -51,9 +51,11 @@ class Handler(webapp.RequestHandler):
             key = t[0]
             try:
                 val = t[1](tpl[key])
-                entry.__dict__[t[0]] = val
+                setattr(entry, t[0], val)
             except ValueError:
                 tpl['error'] = t[2]
                 break
+        if 'error' not in tpl:
+            entry.user = user
             entry.put()
         self.response.out.write(template.Render("add.html", tpl))
