@@ -1,0 +1,34 @@
+<html><body>
+<link href="/css/home.css" type="text/css" rel="stylesheet"></link>
+<h1>Welcome, {{user}}</h1>
+<div class="loginbar">
+<ul>
+<li><b>{{user}}</b>
+<li><a href="{{logouturl}}">Logout</a>
+</ul>
+</div>
+
+<p>Upcoming birthdays:</p>
+{% if reminders %}
+<table class="remtable">
+<tr><th>Day</th><th>Month</th><th>Year</th><th>Note</th><th>Remind me at</th></tr>
+{% for rem in reminders %}
+<tr>
+<td>{{rem.day}}</td>
+<td>{{rem.month}}</td>
+<td>{{rem.year}}</td>
+<td>{{rem.note}}</td>
+<td>{{rem.remind_hour}}</td>
+</tr>
+{% endfor %}
+</table>
+{% else %}
+<p>You have no upcoming reminders</p>
+{% endif %}
+<div class="actions">
+<ul>
+<li><a href="/add">Add a new reminder</a>
+<li><a href="/remove">Remove selected reminders</a>
+</ul>
+</div>
+</body></html>

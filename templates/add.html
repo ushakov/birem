@@ -1,0 +1,20 @@
+<html><body>
+<link rel="stylesheet" href="/css/home.css" type="text/css"></link>
+<h1>Add a new Reminder</h1>
+
+{% if error %}
+<div class="error">
+{{error}}
+</div>
+{% endif %}
+<form method="POST" action="/add">
+<ul>
+<li>Note: <input type="text" name="note" value="{{note}}">
+<li>Day: <input type="text" name="day" value="{{day}}">
+<li>Month: <input type="text" name="month" value="{{month}}">
+<li>Year: <input type="text" name="year" value="{{year}}">
+<li>Remind me at: <input type="text" name="remind_hour" value="{{remind_hour}}">:00 GMT
+</ul>
+<input type="submit">
+</form> 
+</body></html>
