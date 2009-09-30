@@ -1,0 +1,23 @@
+body {
+    font: 100% Tahoma, Verdana, sans-serif;
+    background-color: White;
+    color: #333333;
+}
+
+a {
+    color: #333333;
+}
+
+a:visited {
+    color: #333333;
+}
+
+ul.home_reminder_list {
+    display: block;
+    background-color: #eeeeee;
+    border: 1px solid Black;
+}
+
+ul.home_reminder_list li {
+    display: block;
+}
