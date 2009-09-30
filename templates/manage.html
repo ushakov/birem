@@ -1,12 +1,12 @@
-<html><body>
-<link href="/css/home.css" type="text/css" rel="stylesheet"></link>
+{% extends "site.html" %}
+
+{% block content %}
+
 <h1>Welcome, {{user}}</h1>
-<div class="loginbar">
-<ul>
-<li><b>{{user}}</b>
-<li><a href="{{logouturl}}">Logout</a>
-</ul>
-</div>
+
+{% if message %}
+<div class = "message">{{message}}</dev>
+{% endif %}
 
 <p>All reminders ({{reminders|length}})</p>
 {% if reminders %}
@@ -20,6 +20,8 @@
 	  -- {{rem.note|default:""}}
 	     {% if rem.year %} ({{rem.year}}) {% endif %}
 	     {% if rem.hour %} @{{rem.hour}}.00 GMT {% endif %}
+	     <a href="/add?id={{rem.id}}" class="manage_edit">[edit]</a>
+	     <a href="/manage?del={{rem.id}}" class="manage_del">[X]</a>
       {% endfor %}
       </ul>
   {% endfor %}
@@ -27,4 +29,6 @@
 {% else %}
 <p>You have no reminders set. <a href="/add">Add one!</a></p>
 {% endif %}
-</body></html>
+
+{% endblock %}
+

@@ -1,6 +1,7 @@
-<html><body>
-<link rel="stylesheet" href="/css/home.css" type="text/css"></link>
-<h1>Add a new Reminder</h1>
+{% extends "site.html" %}
+
+{% block content %}
+<h1>{{header}}</h1>
 
 {% if error %}
 <div class="error">
@@ -15,6 +16,10 @@
 <li>Year: <input type="text" name="year" value="{{year}}">
 <li>Remind me at: <input type="text" name="remind_hour" value="{{remind_hour}}">:00 GMT
 </ul>
+{% if id %}
+<input type="hidden" name="id" value="{{id}}">
+{% endif %} 
 <input type="submit">
 </form> 
-</body></html>
+
+{% endblock %}

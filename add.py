@@ -1,6 +1,8 @@
 from google.appengine.ext import webapp
+from google.appengine.ext import db
 from google.appengine.api import users
 
+import common
 import template
 import data
 
@@ -26,36 +28,56 @@ def v_bounded(low, high):
         return d
     return validate
 
+def v_month():
+    def validate(s):
+        m = data.Months.Index(s)
+        if not m:
+            raise ValueError()
+        return m
+    return validate
+
 FIELDS = [
     ('note', v_text(500), 'Note must be short text'),
     ('day', v_bounded(1,31), 'Day should name a day in the month (1-31)'),
-    ('month',v_bounded(1,12), 'Month should be in 1-12'),
+    ('month',v_month(), 'Month should be in [Jan..Dec]'),
+    ('year', v_bounded(1800,2100), "Year should be four-digit")
 ]
 
-class Handler(webapp.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
-        if not user:
-            self.redirect("/")
-            return
-        self.response.out.write(template.Render("add.html", {}))
+class Handler(common.UserPageHandler):
+    def DoGet(self):
+        params = dict(self.request.params)
+        self.tpl['header'] = "Add a new reminder"
+        if 'id' in params:
+            try:
+                entry = data.Reminder.get(params['id'])
+                self.tpl.update(entry.AsDict())
+                self.tpl['header'] = "Update reminder"
+            except db.KindError:
+                pass
+        self.Reply("add.html")
 
-    def post(self):
-        user = users.get_current_user()
-        if not user:
-            self.redirect("/")
-            return
-        entry = data.Reminder()
-        tpl = dict(self.request.params)
+    def DoPost(self):
+        self.tpl['header'] = "Add a new reminder"
+        self.tpl.update(dict(self.request.params))
+        if 'id' in self.tpl:
+            try:
+                entry = data.Reminder.get(self.tpl['id'])
+                self.tpl['header'] = "Update reminder"
+            except db.KindError:
+                entry = data.Reminder()
+        else:
+            entry = data.Reminder()
         for t in FIELDS:
             key = t[0]
             try:
-                val = t[1](tpl[key])
+                val = t[1](self.tpl[key])
                 setattr(entry, t[0], val)
             except ValueError:
-                tpl['error'] = t[2]
+                self.tpl['error'] = t[2]
                 break
-        if 'error' not in tpl:
-            entry.user = user
+        if 'error' not in self.tpl:
+            entry.user = self.user
             entry.put()
-        self.response.out.write(template.Render("add.html", tpl))
+            self.redirect("/manage")
+            return
+        self.Reply("add.html")

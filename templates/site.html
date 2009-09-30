@@ -1,0 +1,26 @@
+<html><body>
+<link href="/css/site.css" type="text/css" rel="stylesheet"></link>
+<div class="loginbar">
+<ul>
+<li><b>{{user}}</b>
+<li><a href="{{logouturl}}">Logout</a>
+</ul>
+</div>
+
+{% block content %}  {% endblock %}
+
+<div class="actions">
+<ul>
+<li><a href="/">Home</a>
+<li><a href="/add">Add a new reminder</a>
+<li><a href="/manage">Manage reminders</a>
+</ul>
+</div>
+
+{% if debug %}
+<div class="debug"><pre>
+{{debug|escape}}
+</pre></div>
+{% endif %}
+
+</body></html>

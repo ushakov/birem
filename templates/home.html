@@ -1,34 +1,20 @@
-<html><body>
-<link href="/css/home.css" type="text/css" rel="stylesheet"></link>
+{% extends "site.html" %}
+
+{% block content %}
 <h1>Welcome, {{user}}</h1>
-<div class="loginbar">
-<ul>
-<li><b>{{user}}</b>
-<li><a href="{{logouturl}}">Logout</a>
-</ul>
-</div>
 
 <p>Upcoming birthdays:</p>
 {% if reminders %}
-<ul class="reminder_list">
-  {% regroup reminders by month as grouped %}
-  {% for month in grouped %}
-    <li class="reminder_month">{{month.grouper}}
-      <ul class="reminder_month_list">
-      {% for rem in month.list %}
-        <li class="reminder_item">{{rem.day}} -- {{rem.note}} ({{rem.year}}) @{{rem.hour}}.00
-      {% endfor %}
-      </ul>
+<ul class="home_reminder_list">
+  {% for rem in reminders %}
+  <li class="reminder_item">{{rem.month}} {{rem.day}} 
+	  -- {{rem.note|default:""}}
+	     {% if rem.year %} ({{rem.year}}) {% endif %}
+	     {% if rem.hour %} @{{rem.hour}}.00 GMT {% endif %}
   {% endfor %}
 </ul>
-(<a href="/all">View all</a>
 {% else %}
-<p>You have no upcoming reminders. <a href="/all">View all</a></p>
+<p>You have no upcoming reminders. <a href="/manage">See all!</a></p>
 {% endif %}
-<div class="actions">
-<ul>
-<li><a href="/add">Add a new reminder</a>
-<li><a href="/remove">Remove selected reminders</a>
-</ul>
-</div>
-</body></html>
+
+{% endblock %}
