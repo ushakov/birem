@@ -7,10 +7,12 @@ import home
 import add
 import manage
 import upload
+import export
 
 urlmap = [('/', home.Handler),
           ('/add', add.Handler),
           ('/manage', manage.Handler),
+          ('/export', export.Handler),
           ('/upload', upload.Handler)]
 def main():
   application = webapp.WSGIApplication(urlmap,
