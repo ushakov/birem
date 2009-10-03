@@ -1,0 +1,5 @@
+cron:
+- description: daily mail
+  url: /mail/dispatch
+  schedule: every day 01:00
+  timezone: Europe/Moscow
