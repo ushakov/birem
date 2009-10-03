@@ -5,8 +5,6 @@ import common
 import template
 import data
 
-remdb = data.ReminderDB()
-
 class Handler(webapp.RequestHandler):
     user = None
     tpl = {}
@@ -23,6 +21,6 @@ class Handler(webapp.RequestHandler):
             return
         common.FillCommon(self.tpl, self.user)
         self.tpl['reminders'] = []
-        for rem in remdb.UpcomingReminders(self.user):
+        for rem in data.remdb.UpcomingReminders(self.user):
             self.tpl['reminders'].append(rem.AsDict())
         self.Reply("home.html")

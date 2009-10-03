@@ -22,6 +22,17 @@ class Months:
             return None
         return Months._MONTH_NAMES[i]
 
+class Weekdays:
+    _WEEKDAY_NAMES = [
+        "Mon", "Tue", "Wed", "Thu",
+        "Fri", "Sat", "Sun"]
+
+    @staticmethod
+    def Name(i):
+        if i < 0 or i > 6:
+            return None
+        return Weekdays._WEEKDAY_NAMES[i]
+
 class Reminder(db.Model):
     user = db.UserProperty()
     note = db.StringProperty()
@@ -36,8 +47,17 @@ class Reminder(db.Model):
         result['note'] = self.note
         result['month'] = Months.Name(self.month or 0)
         result['day'] = self.day
-        result['year'] = self.year
+        result['year'] = self.year or ""
+        date = self.NextDate()
+        result['weekday'] = Weekdays.Name(date.weekday())
         return result
+
+    def NextDate(self):
+        today = datetime.date.today()
+        date = datetime.date(year = today.year, day = self.day, month = self.month)
+        if date < today:
+            date.replace(year = date.year + 1)
+        return date
 
 class ReminderDB:
     to_send = Reminder.gql("WHERE day=:day AND month=:month")
@@ -68,9 +88,10 @@ class ReminderDB:
         for result in self.upcoming_next_month:
             yield result
 
-    def UsersToRemind(self):
+    def UsersToRemind(self, today=None):
         week = datetime.timedelta(weeks = 1)
-        today = datetime.date.today()
+        if today is None:
+            today = datetime.date.today()
         in_a_week = today + week
         in_two_weeks = in_two_weeks + week
         self.all_at_date.bind(month = today.month,
@@ -88,9 +109,10 @@ class ReminderDB:
             users[rem.user] = 1
         return users.keys()
 
-    def RemindersToSend(self, current_user):
+    def RemindersToSend(self, current_user, today = None):
         week = datetime.timedelta(weeks = 1)
-        today = datetime.date.today()
+        if today is None:
+            today = datetime.date.today()
         in_a_week = today + week
         in_two_weeks = in_two_weeks + week
         self.at_date.bind(month = today.month,
@@ -127,3 +149,5 @@ class ReminderDB:
     def RemindersForUser(self, current_user):
         self.for_user.bind(user = current_user)
         return self.for_user
+
+remdb = ReminderDB()

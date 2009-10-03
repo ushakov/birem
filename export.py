@@ -7,11 +7,9 @@ import StringIO
 import data
 import common
 
-remdb = data.ReminderDB()
-
 class Handler(common.UserPageHandler):
     def DoGet(self):
-        rems = remdb.RemindersForUser(self.user)
+        rems = data.remdb.RemindersForUser(self.user)
         self.tpl['lines'] = []
         for rem in rems:
             stringfile = StringIO.StringIO()

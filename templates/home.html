@@ -7,7 +7,8 @@
 {% if reminders %}
 <ul class="home_reminder_list">
   {% for rem in reminders %}
-  <li class="reminder_item">{{rem.month}} {{rem.day}} 
+  <li class="reminder_item"><span class="weekday">{{rem.weekday}}</span>
+                            <span class="date">{{rem.month}} {{rem.day}}</span>
 	  -- {{rem.note|default:""}}
 	     {% if rem.year %} ({{rem.year}}) {% endif %}
   {% endfor %}

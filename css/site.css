@@ -74,3 +74,33 @@ div.debug {
     padding: 0.5em;
     padding-top: 3.5em;
 }
+
+.message {
+    display: block;
+    width: 50%;
+    background-color: #ffd;
+    color: #080;
+    border: 1px solid #080;
+    text-align: center;
+}
+
+.error {
+    display: block;
+    width: 50%;
+    background-color: #ffd;
+    color: #800;
+    border: 1px solid #800;
+    text-align: center;
+}
+
+.weekday {
+    width: 3em;
+    display: block;
+    float: left;
+}
+
+.date {
+    width: 4em;
+    display: block;
+    float: left;
+};
