@@ -28,7 +28,6 @@ class Reminder(db.Model):
     month = db.IntegerProperty()
     day = db.IntegerProperty()
     year = db.IntegerProperty()
-    remind_hour = db.IntegerProperty()
 
     def AsDict(self):
         result = {}
@@ -38,11 +37,10 @@ class Reminder(db.Model):
         result['month'] = Months.Name(self.month or 0)
         result['day'] = self.day
         result['year'] = self.year
-        result['remind_hour'] = self.remind_hour
         return result
 
 class ReminderDB:
-    to_send = Reminder.gql("WHERE day=:day AND month=:month AND hour=:hour")
+    to_send = Reminder.gql("WHERE day=:day AND month=:month")
     for_user = Reminder.gql("WHERE user=:user ORDER BY month,day")
     upcoming_this_month = Reminder.gql("WHERE user=:user " 
                                        "AND month=:month AND day >= :day "

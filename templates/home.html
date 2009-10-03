@@ -10,7 +10,6 @@
   <li class="reminder_item">{{rem.month}} {{rem.day}} 
 	  -- {{rem.note|default:""}}
 	     {% if rem.year %} ({{rem.year}}) {% endif %}
-	     {% if rem.hour %} @{{rem.hour}}.00 GMT {% endif %}
   {% endfor %}
 </ul>
 {% else %}

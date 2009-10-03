@@ -14,12 +14,11 @@
 <li>Day: <input type="text" name="day" value="{{day}}">
 <li>Month: <input type="text" name="month" value="{{month}}">
 <li>Year: <input type="text" name="year" value="{{year}}">
-<li>Remind me at: <input type="text" name="remind_hour" value="{{remind_hour}}">:00 GMT
 </ul>
 {% if id %}
 <input type="hidden" name="id" value="{{id}}">
 {% endif %} 
-<input type="submit">
+<input type="submit" value="Add">
 </form> 
 
 {% endblock %}

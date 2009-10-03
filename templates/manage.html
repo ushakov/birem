@@ -19,13 +19,13 @@
         <li class="reminder_item">{{rem.day|default:""}} 
 	  -- {{rem.note|default:""}}
 	     {% if rem.year %} ({{rem.year}}) {% endif %}
-	     {% if rem.hour %} @{{rem.hour}}.00 GMT {% endif %}
 	     <a href="/add?id={{rem.id}}" class="manage_edit">[edit]</a>
 	     <a href="/manage?del={{rem.id}}" class="manage_del">[X]</a>
       {% endfor %}
       </ul>
   {% endfor %}
 </ul>
+<a href="/export">Download as CSV file</a>
 {% else %}
 <p>You have no reminders set. <a href="/add">Add one!</a></p>
 {% endif %}
