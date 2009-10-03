@@ -1,20 +1,21 @@
-<html><body>
+<html>
 <link href="/css/site.css" type="text/css" rel="stylesheet"></link>
-<div class="loginbar">
-<ul>
-<li><b>{{user}}</b>
-<li><a href="{{logouturl}}">Logout</a>
-</ul>
-</div>
-
-{% block content %}  {% endblock %}
-
+<body>
 <div class="actions">
 <ul>
-<li><a href="/">Home</a>
-<li><a href="/add">Add a new reminder</a>
-<li><a href="/manage">Manage reminders</a>
+<li><a href="/">[Home]</a></li>
+<li><a href="/add">[Add a new reminder]</a></li>
+<li><a href="/manage">[Manage reminders]</a></li>
+<li><a href="/upload">[Upload CSV]</a></li>
 </ul>
+<div class="loginbar">
+<b>{{user}}</b> |
+<a href="{{logouturl}}">Logout</a>
+</div>
+</div>
+
+<div class="cnt">
+{% block content %}  {% endblock %}
 </div>
 
 {% if debug %}

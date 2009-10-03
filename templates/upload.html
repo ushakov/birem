@@ -1,0 +1,20 @@
+{% extends "site.html" %}
+
+{% block content %}
+<h1>Upload CSV</h1>
+
+<p>Upload a CSV file of the following format:</p>
+<p>Columns:
+<ul>
+  <li>Day (1-31)
+  <li>Month (1-12 or Jan-Dec)
+  <li>Year (four-digit or empty)
+  <li>Comments
+</ul>
+
+<form method="POST" action="/upload">
+<input type=file name=csv>
+<input type=submit>
+</form>
+
+{% endblock %}

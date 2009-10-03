@@ -10,14 +10,14 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 39 times in query history.
+# Used 221 times in query history.
 - kind: Reminder
   properties:
   - name: month
   - name: user
   - name: day
 
-# Used 49 times in query history.
+# Used 53 times in query history.
 - kind: Reminder
   properties:
   - name: user

@@ -2,6 +2,8 @@ body {
     font: 100% Tahoma, Verdana, sans-serif;
     background-color: White;
     color: #333333;
+    padding: 0px;
+    margin: 0px;
 }
 
 a {
@@ -14,10 +16,63 @@ a:visited {
 
 ul.home_reminder_list {
     display: block;
-    background-color: #eeeeee;
+    background-color: #eee;
     border: 1px solid Black;
 }
 
 ul.home_reminder_list li {
     display: block;
+}
+
+.loginbar {
+    position: relative;
+    top: 0px;
+    right: 0px;
+    padding: 0em;
+    width: auto;
+}
+
+.actions {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width:100%;
+    background-color: #99f;
+    padding: 0.3em;
+}
+
+.actions ul {
+    list-style: none;
+    margin: 0.3em;
+    padding: 0.3em;
+}
+
+.actions li {
+    float: left;
+    margin-right: 0.5em;
+}
+
+.actions li a {
+    display: block;
+    border: 1px solid Black;
+    background-color: #77f;
+    padding: 0.5em;
+    text-decoration: none;
+}
+
+.actions li a:hover {
+    background-color: #fff;
+}
+
+div.debug {
+    background-color: #ddd;
+    border: 1px solid Black;
+}
+
+.cnt {
+    padding: 0.5em;
+}
+.cnt h1 {
+    padding-top: 1em;
 }
