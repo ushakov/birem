@@ -93,14 +93,13 @@ class ReminderDB:
         if today is None:
             today = datetime.date.today()
         in_a_week = today + week
-        in_two_weeks = in_two_weeks + week
         self.all_at_date.bind(month = today.month,
                               day = today.day)
-        rems_today = list(self.at_date)
+        rems_today = list(self.all_at_date)
 
         self.all_at_date.bind(month = in_a_week.month,
                               day = in_a_week.day)
-        rems_in_a_week = list(self.at_date)
+        rems_in_a_week = list(self.all_at_date)
 
         users = {}
         for rem in rems_today:
@@ -114,7 +113,6 @@ class ReminderDB:
         if today is None:
             today = datetime.date.today()
         in_a_week = today + week
-        in_two_weeks = in_two_weeks + week
         self.at_date.bind(month = today.month,
                           day = today.day,
                           user = current_user)
@@ -132,7 +130,7 @@ class ReminderDB:
                                       day = today.day,
                                       user = current_user)
         if in_a_week.month != today.month:
-            self.upcoming_next_month.bind(month = in_a_week.month,
+            self.upcoming_next_month.bind(nextmonth = in_a_week.month,
                                           day = in_a_week.day,
                                           user = current_user)
             for rem in self.upcoming_this_month:
