@@ -1,0 +1,23 @@
+{% extends "site.html" %}
+
+{% block content %}
+<h1>Data Uploaded</h1>
+
+{% if errors %}
+<h2>There were errors</h2>
+
+<p>Some of the data are not good. Here is the list:
+
+<ul class="upload-error">
+{% for error in errors %}
+  <li>{{error.day}},{{error.month}},{{error.year}},&quot;{{error.comment}}&quot;
+{% endfor %}
+</ul>
+
+<p>You can copy these lines, edit them, and <a href="/upload">upload again</a>.
+{% endif %}
+
+<p>There are {{done}} entries that uploaded ok.
+{% ifnotequal done 0 %}They are added to <a href="/manage">your list</a>.{% endifnotequal %}
+
+{% endblock %}
