@@ -51,7 +51,7 @@ class SendMailHandler(webapp.RequestHandler):
             param = self.request.params.get('date') 
             today = datetime.datetime.strptime(param, "%d-%m-%Y").date()
         else:
-            today = datetime.date.today()
+            today = datetime.datetime.utcnow().date()
         tpl['date'] = {}
         tpl['date']['day'] = today.day
         tpl['date']['month'] = data.Months.Name(today.month)

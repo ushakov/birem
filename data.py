@@ -53,7 +53,7 @@ class Reminder(db.Model):
         return result
 
     def NextDate(self):
-        today = datetime.date.today()
+        today = datetime.datetime.utcnow().date()
         date = datetime.date(year = today.year, day = self.day, month = self.month)
         if date < today:
             date.replace(year = date.year + 1)
@@ -74,7 +74,7 @@ class ReminderDB:
     all_at_date = Reminder.gql("WHERE month=:month AND day=:day")
 
     def UpcomingReminders(self, current_user):
-        now = datetime.date.today()
+        now = datetime.datetime.utcnow().date()
         next = now.month % 12 + 1
         self.upcoming_this_month.bind(month = now.month,
                                       day = now.day,
@@ -91,7 +91,7 @@ class ReminderDB:
     def UsersToRemind(self, today=None):
         week = datetime.timedelta(weeks = 1)
         if today is None:
-            today = datetime.date.today()
+            today = datetime.datetime.utcnow().date()
         in_a_week = today + week
         self.all_at_date.bind(month = today.month,
                               day = today.day)
@@ -111,7 +111,7 @@ class ReminderDB:
     def RemindersToSend(self, current_user, today = None):
         week = datetime.timedelta(weeks = 1)
         if today is None:
-            today = datetime.date.today()
+            today = datetime.datetime.utcnow().date()
         in_a_week = today + week
         self.at_date.bind(month = today.month,
                           day = today.day,
