@@ -28,6 +28,13 @@ def v_bounded(low, high):
         return d
     return validate
 
+def v_year():
+    def validate(s):
+        if s == "":
+            return None
+        return int(s)
+    return validate
+
 def v_month():
     def validate(s):
         m = data.Months.Index(s)
@@ -40,7 +47,7 @@ FIELDS = [
     ('note', v_text(500), 'Note must be short text'),
     ('day', v_bounded(1,31), 'Day should name a day in the month (1-31)'),
     ('month',v_month(), 'Month should be in [Jan..Dec]'),
-    ('year', v_bounded(1800,2100), "Year should be four-digit")
+    ('year', v_year(), "Year should be four-digit or empty")
 ]
 
 class Handler(common.UserPageHandler):
