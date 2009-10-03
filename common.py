@@ -5,7 +5,7 @@ import template
 
 def FillCommon(tpl, user):
     tpl['user'] = user.nickname()
-    tpl['logouturl'] = users.create_logout_url
+    tpl['logouturl'] = users.create_logout_url("/")
 
 class UserPageHandler(webapp.RequestHandler):
     user = None
