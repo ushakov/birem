@@ -27,6 +27,7 @@ class Handler(common.UserPageHandler):
                 values.append(rem.note.encode("utf-8"))
             else:
                 values.append("")
+            values.append(rem.key())
             formatter.writerow(values)
             csv_line = stringfile.getvalue()
             self.tpl['lines'].append(csv_line)

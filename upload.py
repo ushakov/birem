@@ -35,13 +35,25 @@ class Handler(common.UserPageHandler):
     def DoPost(self):
         uploaded_file = self.request.get("csv")
         uploaded_lines = uploaded_file.split("\n")
+        if not uploaded_lines[-1]:
+            uploaded_lines = uploaded_lines[:-1]
         csv_reader = csv.reader(uploaded_lines)
         line_no = 1
         entries_ok = 0
         for line in csv_reader:
             # ensure there are enough elements in line
-            line.extend([""] * 4)
-            rem = data.Reminder()
+            line.extend([""] * 5)
+            rem = None
+            if line[4]:
+                key = line[4]
+                try:
+                    rem = data.Reminder.get(key)
+                    if rem is None or rem.user != self.user:
+                        rem = None
+                except KindError:
+                    rem = None
+            if rem is None:
+                rem = data.Reminder()
             rem.user = self.user
             rem.day = GetNumber(line[0])
             rem.month = GetMonthFromCSV(line[1])
