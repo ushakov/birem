@@ -27,13 +27,16 @@ class DispatchHandler(webapp.RequestHandler):
         users = data.remdb.UsersToRemind(today)
         for user in users:
             request_params['user'] = user.email()
-            task = taskqueue.Task(url="/mail/send", request_params)
+            task = taskqueue.Task(url="/mail/send", params=request_params)
             mailqueue.add(task)
 
 
 class SendMailHandler(webapp.RequestHandler):
+    def get(self):
+        self.post()
+
     def post(self):
-        email = self.request.params('user')
+        email = self.request.params['user']
         if not email:
             self.response.set_status("500")
             return
@@ -44,7 +47,6 @@ class SendMailHandler(webapp.RequestHandler):
             return
 
         tpl = {}
-        tpl['reminders'] = []
         if self.request.params.get('date'):
             param = self.request.params.get('date') 
             today = datetime.datetime.strptime(param, "%d-%m-%Y").date()
@@ -55,9 +57,12 @@ class SendMailHandler(webapp.RequestHandler):
         tpl['date']['month'] = data.Months.Name(today.month)
         tpl['date']['year'] = today.year
         tpl['date']['weekday'] = data.Weekdays.Name(today.weekday)
+
+        tpl['user'] = user.nickname()
         
+        tpl['reminders'] = []
         for rem in data.remdb.RemindersToSend(user, today):
-            if rem.day == today.day && rem.month == today.month:
+            if rem.day == today.day and rem.month == today.month:
                 tpl['today'] = rem.AsDict()
             else:
                 tpl['reminders'].append(rem.AsDict())
@@ -67,7 +72,6 @@ class SendMailHandler(webapp.RequestHandler):
         mail.send_mail("ushmax@gmail.com", user.email(),
                        subject,
                        mail_text)
-            
             
 urlmap = [('/mail/dispatch', DispatchHandler),
           ('/mail/send', SendMailHandler)]
