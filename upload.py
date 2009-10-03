@@ -1,3 +1,4 @@
+from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.api import users
 
@@ -50,7 +51,9 @@ class Handler(common.UserPageHandler):
                     rem = data.Reminder.get(key)
                     if rem is None or rem.user != self.user:
                         rem = None
-                except KindError:
+                except db.KindError:
+                    rem = None
+                except db.BadRequestError:
                     rem = None
             if rem is None:
                 rem = data.Reminder()
