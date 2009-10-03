@@ -10,16 +10,7 @@ class Handler(common.UserPageHandler):
         self.Reply("upload.html")
 
     def DoPost(self):
-        s = self.request.body
+        s = self.request.get("csv")
         self.tpl['debug'] = "File:\n" + s + "\n"
-        for i in self.request.params:
-            self.tpl['debug'] += i + ": " + self.request.params[i] + "\n"
-
-        for i in self.request.headers:
-            self.tpl['debug'] += i + ": " + self.request.headers[i] + "\n"
-
-        for i in self.request.body_file:
-            self.tpl['debug'] += i  + "\n"
-
         self.Reply("upload.html")
         
